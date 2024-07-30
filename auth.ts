@@ -1,8 +1,22 @@
-import NextAuth from "next-auth"
+import NextAuth, { type DefaultSession } from "next-auth"
 import authConfig from "@/auth.config"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { db } from "@/lib/db"
 import { getUserById } from "@/data/user"
+import { UserRole } from "@prisma/client"
+
+// export type ExtendedUser = DefaultSession["user"] & {
+//     role: "ADMIN" | "USER"
+// }
+
+// declare module "next-auth" {
+//     /***
+//      * 
+//      */
+//     interface Session {
+//         user: ExtendedUser;
+//     }
+// }
 
 export const {
     auth,
@@ -12,13 +26,13 @@ export const {
 } = NextAuth({
     callbacks: {
         async session({ token, session }) {
-            console.log(token)
+            // console.log(token)
             if (token.sub && session.user) {
                 session.user.id = token.sub
             }
 
             if (token.role && session.user) {
-                session.user.role = token.role
+                session.user.role = token.role as any;
             }
 
             return session;
