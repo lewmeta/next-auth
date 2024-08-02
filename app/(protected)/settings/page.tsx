@@ -1,30 +1,23 @@
 "use client"
 
 import { logout } from "@/actions/logout";
+import { Button } from "@/components/ui/button";
+import { useCurrentUser } from "@/hooks/use-current-user";
 import { useSession } from "next-auth/react"
 
 
 const SettingsPage = () => {
-    // const session = await auth(); this is for server only.
 
-    /**
-     * this code works for client only
-     */
-    const session = useSession();
+    const session = useCurrentUser();
 
-    /**
-     * To sign out
-     */
     const onClick = () => {
         logout();
     }
-
     return (
         <div>
-            {JSON.stringify(session)}
-            <button onClick={onClick}>
+            <Button onClick={onClick}>
                 Sign out
-            </button>
+            </Button>
         </div>
 
     )
