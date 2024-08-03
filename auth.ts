@@ -45,15 +45,13 @@ export const {
 
             const existingUser = await getUserById(user.id || "");
 
+            // Prevent sign in without email verification
             if (!existingUser?.emailVerified) return false;
 
             // TODO: Add 2FA check.
             if (existingUser.isTwoFactorEnabled) {
                 const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
 
-                console.log({
-                    twoFactorConfirmation,
-                })
                 if (!twoFactorConfirmation) return false;
 
                 // Delete two factor confirmation for next sign in.
@@ -65,13 +63,16 @@ export const {
             return true
         },
         async session({ token, session }) {
-            // console.log(token)
             if (token.sub && session.user) {
-                session.user.id = token.sub
+                session.user.id = token.sub;
             }
 
             if (token.role && session.user) {
-                session.user.role = token.role as any;
+                session.user.role = token.role as UserRole;
+            }
+
+            if (session.user) {
+                session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
             }
 
             return session;
@@ -84,7 +85,7 @@ export const {
             if (!existingUser) return token;
 
             token.role = existingUser.role;
-
+            token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
             return token;
         }
     },
