@@ -42,8 +42,8 @@ Check out the live demo of the project [here](https://next-auth-v4.vercel.app)
 To get started with this project, clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/harshxraj/saas-landing-nextjs.git
-cd saas-landing-nextjs
+git clone https://github.com/lewmeta/next-auth.git
+cd next-auth
 npm install
 ```
 
@@ -56,3 +56,5 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to see the project.
+
+![alt text](https://images.pexels.com/photos/270348/pexels-photo-270348.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)
